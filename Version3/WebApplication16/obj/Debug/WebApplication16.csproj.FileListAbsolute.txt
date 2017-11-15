@@ -1,0 +1,180 @@
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\ApplicationInsights.config
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\csc.exe
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\csc.exe.config
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\csc.rsp
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\csi.exe
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\csi.exe.config
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\csi.rsp
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\Microsoft.Win32.Primitives.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.AppContext.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Collections.Immutable.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Console.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Diagnostics.Process.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Diagnostics.StackTrace.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.IO.Compression.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.IO.FileSystem.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.IO.FileSystem.Primitives.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.IO.Pipes.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.AccessControl.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.Claims.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.Encoding.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.Primitives.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Security.Principal.Windows.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Text.Encoding.CodePages.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Threading.Thread.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.ValueTuple.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Xml.ReaderWriter.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Xml.XmlDocument.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Xml.XPath.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\System.Xml.XPath.XDocument.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\vbc.exe
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\vbc.exe.config
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\vbc.rsp
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\VBCSCompiler.exe
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\roslyn\VBCSCompiler.exe.config
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\WebApplication16.dll.config
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\WebApplication16.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\WebApplication16.pdb
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Antlr3.Runtime.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.Agent.Intercept.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.DependencyCollector.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.PerfCounterCollector.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.ServerTelemetryChannel.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.Web.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.WindowsServer.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.ApplicationInsights.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.Web.Infrastructure.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Newtonsoft.Json.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Helpers.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Mvc.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Optimization.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Razor.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.WebPages.Deployment.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.WebPages.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.WebPages.Razor.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\WebGrease.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Helpers.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Mvc.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Optimization.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.Razor.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.WebPages.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.WebPages.Deployment.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\System.Web.WebPages.Razor.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Antlr3.Runtime.pdb
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Newtonsoft.Json.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.ApplicationInsights.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.DependencyCollector.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.ServerTelemetryChannel.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.WindowsServer.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\bin\Microsoft.AI.Web.xml
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\obj\Debug\WebApplication16.csprojResolveAssemblyReference.cache
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\obj\Debug\WebApplication16.csproj.CoreCompileInputs.cache
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\obj\Debug\WebApplication16.dll
+c:\users\i864577\source\repos\WebApplication16\WebApplication16\obj\Debug\WebApplication16.pdb
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\ApplicationInsights.config
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\csc.exe
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\csc.exe.config
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\csc.rsp
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\csi.exe
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\csi.exe.config
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\csi.rsp
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.AppContext.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Console.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Diagnostics.Process.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.IO.Compression.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.IO.Pipes.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.Claims.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Threading.Thread.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.ValueTuple.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Xml.XPath.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\vbc.exe
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\vbc.exe.config
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\vbc.rsp
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\VBCSCompiler.exe
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\WebApplication16.dll.config
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\WebApplication16.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\WebApplication16.pdb
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Antlr3.Runtime.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.Web.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.ApplicationInsights.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Newtonsoft.Json.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Helpers.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Mvc.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Optimization.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Razor.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.WebPages.Deployment.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.WebPages.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.WebPages.Razor.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\WebGrease.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Helpers.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Mvc.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Optimization.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.Razor.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.WebPages.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.WebPages.Deployment.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\System.Web.WebPages.Razor.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Antlr3.Runtime.pdb
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Newtonsoft.Json.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.ApplicationInsights.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\bin\Microsoft.AI.Web.xml
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\obj\Debug\WebApplication16.csprojResolveAssemblyReference.cache
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\obj\Debug\WebApplication16.csproj.CoreCompileInputs.cache
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\obj\Debug\WebApplication16.dll
+C:\Users\I864725\Downloads\the good stuff\WebApplication16\WebApplication16\obj\Debug\WebApplication16.pdb

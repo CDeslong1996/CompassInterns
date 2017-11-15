@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "ProjectByStatus";
+}
+
+
+
+<h2>ProjectByStatus</h2>
+<br/>
+<input type="checkbox" value="Pipeline" id="pipeline" onclick="filter()"/> <label for="pipeline"> Pipeline </label>
+<input type="checkbox" value="Initiation" id="initiation" onclick="filter()"/><label for="initiation"> Initiation </label>
+<input type="checkbox" value="Management" id="management" onclick="filter()"/><label for="management"> Management </label>
+<input type="checkbox" value="Closeout" id="closeout" onclick="filter()" /><label for="closeout"> Closeout </label>
+<input type="checkbox" value="Archived" id="archived" onclick="filter()"/><label for="archived"> Archived </label>
+<br/>
+<br/>
+<table cellpadding="7" id="projectByStatus" border="1">
+    @Html.Raw(ViewBag.Message)
+</table>
+
+<script>
+    function filter() {
+        var checks = getCheckboxes();
+        var found, table, tr, td, i, j, k;
+        table = document.getElementById("projectByStatus");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (checks.indexOf(td[1].innerHTML.toUpperCase())>-1) {
+                    found = true;
+                }
+            }
+            if (found || tr[i].id == "tableHeaders" || checks.length == 0) {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function getCheckboxes() {
+        var input = [];
+        if (document.getElementById("pipeline").checked == true) {
+            input.push("Pipeline".toUpperCase());
+        }
+        if (document.getElementById("initiation").checked == true) {
+            input.push("Initiation".toUpperCase());
+        }
+        if (document.getElementById("management").checked == true) {
+            input.push("Management".toUpperCase());
+        }
+        if (document.getElementById("closeout").checked == true) {
+            input.push("Closeout".toUpperCase());
+        }
+        if (document.getElementById("archived").checked == true) {
+            input.push("Archived".toUpperCase());
+        }
+
+        return input;
+    }
+</script>

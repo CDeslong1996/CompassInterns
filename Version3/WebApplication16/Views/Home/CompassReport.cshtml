@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "CompassReport";
+}
+
+<style>
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: center;
+    }
+</style>
+
+<h1>Live Status Report</h1>
+<br />
+<p>Search table: <input type="text" id="searchData" oninput="searchTable()" placeholder="Search table" /></p>
+<br />
+<br />
+
+@Html.Raw(ViewBag.Message)
+
+<script>
+    function searchTable() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchData");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("projectDataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found || tr[i].id=="tableHeaders" || filter=="") {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function searchProjectName() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchName");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("projectDataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found || tr[i].id == "tableHeaders" || filter=="") {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function searchProjectSponsor() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchSponsor");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("projectDataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found || tr[i].id == "tableHeaders" || filter=="") {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function searchProjectManager() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchManager");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("projectDataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found || tr[i].id == "tableHeaders" || filter=="") {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+</script>
