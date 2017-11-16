@@ -3,26 +3,25 @@
 }
 
 <style>
-    table, td, th{
+    table, td, th {
         border: 1px solid black;
     }
-    table{
+
+    table {
         width: 100%;
         border-collapse: collapse;
     }
-    th, td{
-       text-align: center;
+
+    th, td {
+        text-align: center;
     }
-    
-
-
 </style>
 
 <h1>Weekly Status Report</h1>
 <br />
 <p>Search table: <input type="text" id="searchData" oninput="searchTable()" placeholder="Search table" /></p>
 <br />
-<br/>
+<br />
 @Html.Raw(ViewBag.Message)
 
 <script>

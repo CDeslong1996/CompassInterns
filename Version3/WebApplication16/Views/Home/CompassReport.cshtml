@@ -4,16 +4,24 @@
 }
 
 <style>
-    table, td, th {
+    /*table, tr, th {
         border: 1px solid black;
+    }*/
+
+    td:last-child {
+        border:none;
     }
 
     table {
+        border-right:0;
+        border-bottom:0;
         width: 100%;
         border-collapse: collapse;
     }
 
-    th, td {
+    td,th {
+        border: 1px solid black;
+        border-collapse: collapse;
         text-align: center;
     }
 </style>
@@ -23,7 +31,6 @@
 <p>Search table: <input type="text" id="searchData" oninput="searchTable()" placeholder="Search table" /></p>
 <br />
 <br />
-
 @Html.Raw(ViewBag.Message)
 
 <script>

@@ -37,14 +37,15 @@ namespace WebApplication16.Controllers
             List<string> alreadyDisplayed = new List<string>();
 
             ViewBag.Message += "<table cellpadding=\"7\" id=\"projectDataTable\" border=\"1\"><tr id=\"tableHeaders\">" +
-                "<th>Project Name:<br/><input type=\"text\" id=\"searchName\" oninput=\"searchProjectName()\" placeholder=\"Search table\" /></th>" +
-                "<th>Project Sponsor:<br/><input type=\"text\" id=\"searchSponsor\" oninput=\"searchProjectSponsor()\" placeholder=\"Search table\" /></th>" +
-                "<th>Project Manager:<br/><input type=\"text\" id=\"searchManager\" oninput=\"searchProjectManager()\" placeholder=\"Search table\" /></th>" +
+                "<th>Project Name</th>" +
+                "<th>Project Sponsor</th>" +
+                "<th>Project Manager</th>" +
                 "<th>PM Update Status</th>" +
                 "<th>Milestone Status</th>" +
                 "<th>Staffed</th>" +
                 "<th>Risk Score</th>" +
                 "<th>Issue Score</th>" +
+                "<th>Open Project</th>" +
                 "</tr><tbody>";
 
             while (dr.Read())
@@ -86,6 +87,8 @@ namespace WebApplication16.Controllers
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td>";
                 ViewBag.Message += projectId;
+                ViewBag.Message += "</td><td>";
+                ViewBag.Message += "<div><input type=\"button\" value=\"E-mail PM\"></div>";
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "</tr>";
             }
@@ -241,17 +244,17 @@ namespace WebApplication16.Controllers
 
             if (mMissed == 0)
             {
-                icon = "<img align=\"middle\" src =\"../Img/Traffic_Green.png\">";
+                icon = "<img align=\"middle\" src=\"../Img/Traffic_Green.png\">";
                 tooltip = "Project is missing no milestones.";
             }
             else if (mMissed == 1)
             {
-                icon = "<img align=\"middle\" src =\"../Img/Traffic_Yellow.png\">";
+                icon = "<img align=\"middle\" src=\"../Img/Traffic_Yellow.png\">";
                 tooltip = "Project is missing one milestone.";
             }
             else
             {
-                icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                icon = "<img align=\"middle\" src=\"../Img/Traffic_Red.png\">";
                 
                 tooltip = "Project is missing " + mMissed + " milestones.";
                
@@ -454,15 +457,15 @@ namespace WebApplication16.Controllers
             int numScore = Convert.ToInt32(score);
             if (numScore <= green)
             {
-                return "<img align=\"middle\" src =\"../Img/Traffic_Green.png\">";
+                return "<img align=\"middle\" src=\"../Img/Traffic_Green.png\">";
             }
             else if(numScore > green && numScore < red)
             {
-                return "<img align=\"middle\" src =\"../Img/Traffic_Yellow.png\">";
+                return "<img align=\"middle\" src=\"../Img/Traffic_Yellow.png\">";
             }
             else if (numScore >= red)
             {
-                return "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                return "<img align=\"middle\" src=\"../Img/Traffic_Red.png\">";
             }
             else
             {
@@ -479,15 +482,15 @@ namespace WebApplication16.Controllers
             int numScore = score;
             if (numScore >= green)
             {
-                return "<img align=\"middle\" src =\"../Img/Traffic_Green.png\">";
+                return "<img align=\"middle\" src=\"../Img/Traffic_Green.png\">";
             }
             else if (numScore < green && numScore > red)
             {
-                return "<img align=\"middle\" src =\"../Img/Traffic_Yellow.png\">";
+                return "<img align=\"middle\" src=\"../Img/Traffic_Yellow.png\">";
             }
             else if (numScore <= red)
             {
-                return "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                return "<img align=\"middle\" src=\"../Img/Traffic_Red.png\">";
             }
             else
             {
@@ -603,9 +606,6 @@ namespace WebApplication16.Controllers
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td>";
                 ViewBag.Message += GetBusinessDays(createdDate,today);
-                ViewBag.Message += "</td>";
-                ViewBag.Message += "<td>";
-                ViewBag.Message += projectId;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "</tr>";
             }
