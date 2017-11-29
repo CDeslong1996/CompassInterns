@@ -1,30 +1,135 @@
-﻿
+﻿<!DOCTYPE html>
+
 @{
     ViewBag.Title = "CompassReport";
 }
 
 <style>
-    table, td, th {
+    /*table, tr, th {
         border: 1px solid black;
-    }
+    }*/
 
     table {
+        border-right: 0;
+        border-bottom: 0;
         width: 100%;
         border-collapse: collapse;
     }
 
-    th, td {
+    th.sort:hover {
+        background-color: lightgray;
+    }
+
+    td, th {
+        border: 1px solid black;
+        border-collapse: collapse;
         text-align: center;
     }
+
+    header {
+        border-bottom: 1px solid #000;
+    }
+
+        header > h1 {
+            display: inline-block;
+        }
+
+        header span {
+            float: right;
+            top:-40px;
+        }
 </style>
 
-<h1>Live Status Report</h1>
-<br />
+<header>
+    <h1>Live Status Report for Projects Completing in 2017</h1>
+    <span id="date">
+        <script>
+            n = new Date();
+            y = n.getFullYear();
+            m = n.getMonth() + 1;
+            d = n.getDate();
+            min = n.getMinutes();
+            s = n.getSeconds();
+            h = n.getHours() + 1;
+            if (h < 12) {
+                ap = "AM";
+            }
+            else {
+                ap = "PM"
+            }
+            h = h % 13;
+            if (h == 0) {
+                h = 12;
+            }
+            if (min < 10) {
+                min = "0" + min;
+            }
+            if (s < 10) {
+                s = "0" + s;
+            }
+            document.getElementById("date").innerHTML ="Data is valid as of: "+ m + "/" + d + "/" + y + " " + h + ":" + min + ":" + s + " " + ap;
+        </script>
+    </span>
+</header>
 <p>Search table: <input type="text" id="searchData" oninput="searchTable()" placeholder="Search table" /></p>
+<button onclick="reset()">Reset Filters</button>
 <br />
 <br />
-
-@Html.Raw(ViewBag.Message)
+<table cellpadding="7" id="projectDataTable">
+    <tr id="tableHeaders">
+        <th>Project Name</th>
+        <th>Project Sponsor</th>
+        <th>Project Manager</th>
+        <th class="sort">
+            <u><a onclick="sortTable(3)">PM Update Status</a></u><br>
+            <select onchange="filterColor(this.value, 3)" id="pmus">
+                <option selected="selected" value="All">All</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Red">Red</option>
+            </select>
+        </th>
+        <th class="sort">
+            <u><a onclick="sortTable(4)">Milestone Status</a></u>
+            <select onchange="filterColor(this.value, 4)" id="ms">
+                <option selected="selected" value="All">All</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Red">Red</option>
+            </select>
+        </th>
+        <th class="sort">
+            <u><a onclick="sortTable(5)">Staffed</a></u>
+            <select onchange="filterColor(this.value, 5)" id="staff">
+                <option selected="selected" value="All">All</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Red">Red</option>
+            </select>
+        </th>
+        <th class="sort" title="Risk Score is calculated by taking the maximum score produced by multiplying Likehood * Impact.">
+            <u><a onclick="sortTable(6)">Risk Score</a></u>
+            <select onchange="filterColor(this.value, 6)" id="rs">
+                <option selected="selected" value="All">All</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Red">Red</option>
+            </select>
+        </th>
+        <th class="sort" title="Issue Score is calculated by taking the maximum score produced by multiplying Priority * Impact.">
+        <u><a onclick="sortTable(7)">Issue Score</a></u>
+            <select onchange="filterColor(this.value, 7)" id="is">
+                <option selected="selected" value="All">All</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Red">Red</option>
+            </select>
+        </th>
+    </tr>
+    <tbody>
+        @Html.Raw(ViewBag.Message)
+    </tbody>
+</table>
 
 <script>
     function searchTable() {
@@ -40,7 +145,7 @@
                     found = true;
                 }
             }
-            if (found || tr[i].id=="tableHeaders" || filter=="") {
+            if (found || tr[i].id == "tableHeaders" || filter == "") {
                 tr[i].style.display = "";
                 found = false;
             } else {
@@ -49,69 +154,130 @@
         }
     }
 
-    function searchProjectName() {
-        var input, filter, found, table, tr, td, i, j;
-        input = document.getElementById("searchName");
-        filter = input.value.toUpperCase();
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("projectDataTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td");
-            for (j = 0; j < td.length; j++) {
-                if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    found = true;
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.getElementsByTagName("tr");
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[n];
+                y = rows[i + 1].getElementsByTagName("td")[n];
+                if (dir == "desc") {
+                    if (x.innerHTML.indexOf('Green') > -1) {
+                        if (y.innerHTML.indexOf('Yellow') > -1 || y.innerHTML.indexOf('Red') > -1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if (x.innerHTML.indexOf('Yellow') > -1) {
+                        if (y.innerHTML.indexOf('Red') > -1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                else if (dir == "asc") {
+                    if (x.innerHTML.indexOf('Red') > -1) {
+                        if (y.innerHTML.indexOf('Yellow') > -1 || y.innerHTML.indexOf('Green') > -1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if (x.innerHTML.indexOf('Yellow') > -1) {
+                        if (y.innerHTML.indexOf('Green') > -1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
                 }
             }
-            if (found || tr[i].id == "tableHeaders" || filter=="") {
-                tr[i].style.display = "";
-                found = false;
-            } else {
-                tr[i].style.display = "none";
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            }
+            else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
             }
         }
     }
 
-    function searchProjectSponsor() {
-        var input, filter, found, table, tr, td, i, j;
-        input = document.getElementById("searchSponsor");
-        filter = input.value.toUpperCase();
+    function filterColor(color, n) {
+        resetOthers(n);
+        var filter, found, table, tr, td, i, j;
+        filter = color;
         table = document.getElementById("projectDataTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td");
             for (j = 0; j < td.length; j++) {
-                if (td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                if (td[n].innerHTML.indexOf(filter) > -1) {
                     found = true;
                 }
             }
-            if (found || tr[i].id == "tableHeaders" || filter=="") {
+            if (found || tr[i].id == "tableHeaders" || filter == "" || filter == "All") {
                 tr[i].style.display = "";
                 found = false;
             } else {
                 tr[i].style.display = "none";
             }
+        }
+        
+    }
+
+    function resetOthers(n) {
+        if (n == 3) {
+            document.getElementById("is").value = "All";
+            document.getElementById("rs").value = "All";
+            document.getElementById("staff").value = "All";
+            document.getElementById("ms").value = "All";
+        }
+        else if (n == 4) {
+            document.getElementById("is").value = "All";
+            document.getElementById("pmus").value = "All";
+            document.getElementById("rs").value = "All";
+            document.getElementById("staff").value = "All";
+        }
+        else if (n == 5) {
+            document.getElementById("is").value = "All";
+            document.getElementById("pmus").value = "All";
+            document.getElementById("rs").value = "All";
+            document.getElementById("ms").value = "All";
+        }
+        else if (n == 6) {
+            document.getElementById("is").value = "All";
+            document.getElementById("pmus").value = "All";
+            document.getElementById("staff").value = "All";
+            document.getElementById("ms").value = "All";
+        }
+        else if (n == 7){
+            document.getElementById("pmus").value = "All";
+            document.getElementById("rs").value = "All";
+            document.getElementById("staff").value = "All";
+            document.getElementById("ms").value = "All";
         }
     }
 
-    function searchProjectManager() {
-        var input, filter, found, table, tr, td, i, j;
-        input = document.getElementById("searchManager");
-        filter = input.value.toUpperCase();
+    function reset() {
+        var table, tr, i;
+        
         table = document.getElementById("projectDataTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td");
-            for (j = 0; j < td.length; j++) {
-                if (td[2].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    found = true;
-                }
-            }
-            if (found || tr[i].id == "tableHeaders" || filter=="") {
-                tr[i].style.display = "";
-                found = false;
-            } else {
-                tr[i].style.display = "none";
-            }
+            tr[i].style.display = "";
         }
+        document.getElementById("is").value = "All";
+        document.getElementById("pmus").value = "All";
+        document.getElementById("rs").value = "All";
+        document.getElementById("staff").value = "All";
+        document.getElementById("ms").value = "All";
     }
 </script>

@@ -14,7 +14,12 @@ namespace WebApplication16.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult Help()
+        {
+            return View();
+        }
+
         public ActionResult CompassReport()
         {
             List<string> dataSql = new List<string>();
@@ -32,21 +37,21 @@ namespace WebApplication16.Controllers
             com.CommandType = CommandType.Text;
             SqlDataReader dr = com.ExecuteReader();
 
-            string pmId, psId, projectId, title, issueScore;
-            Tuple<string, string> staffed, pmUpdateStatus, riskScore, milestone;
+            string pmId, psId, projectId, title;
+            Tuple<string, string> staffed, pmUpdateStatus, riskScore, milestone, issueScore, pminfo;
             List<string> alreadyDisplayed = new List<string>();
 
-            ViewBag.Message += "<table cellpadding=\"7\" id=\"projectDataTable\" border=\"1\"><tr id=\"tableHeaders\">" +
+            /*ViewBag.Message += "<table cellpadding=\"7\" id=\"projectDataTable\" border=\"1\"><tr id=\"tableHeaders\">" +
                 "<th>Project Name</th>" +
                 "<th>Project Sponsor</th>" +
                 "<th>Project Manager</th>" +
-                "<th>PM Update Status</th>" +
-                "<th>Milestone Status</th>" +
-                "<th>Staffed</th>" +
-                "<th>Risk Score</th>" +
-                "<th>Issue Score</th>" +
-                "<th>Open Project</th>" +
-                "</tr><tbody>";
+                "<th class=\"sort\" onclick=\"sortTable(3)\"><u>PM Update Status<br><select><option selected=\"selected\" value=\"All\">All</option><option value=\"Green\">Green</option><option value=\"Yellow\">Yellow</option><option value=\"Red\">Red</option></select></th>" +
+                "<th class=\"sort\" onclick=\"sortTable(4)\"><u>Milestone Status</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(5)\"><u>Staffed</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(6)\"><u>Risk Score</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(7)\"><u>Issue Score</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(8)\">Project Id</th>" +
+                "</tr><tbody>";*/
 
             while (dr.Read())
             {
@@ -58,17 +63,18 @@ namespace WebApplication16.Controllers
                 pmUpdateStatus = getLastPMUpdate(projectId, con);
                 staffed = getStaffedDataLvl1(projectId, con);
                 riskScore = getRiskScore(projectId, con);
-                issueScore = GetIssues(projectId, con).ToString();
+                issueScore = GetIssues(projectId, con);
+                pminfo = getUserName(pmId);
 
                 ViewBag.Message += "<tr>";
                 ViewBag.Message += "<td>";
                 ViewBag.Message += title;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td>";
-                ViewBag.Message += getUserName(psId);
+                ViewBag.Message += getUserName(psId).Item1;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td>";
-                ViewBag.Message += getUserName(pmId);
+                ViewBag.Message += "<a href=\"mailto:"+pminfo.Item2+"\">"+pminfo.Item1+"</a>";
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td title=\"" + pmUpdateStatus.Item2 + "\">";
                 ViewBag.Message += pmUpdateStatus.Item1;
@@ -82,30 +88,58 @@ namespace WebApplication16.Controllers
                 ViewBag.Message += "<td title=\"" + riskScore.Item2 + "\">";
                 ViewBag.Message += riskScore.Item1;
                 ViewBag.Message += "</td>";
-                ViewBag.Message += "<td title=\"Issue Score: " + issueScore + "\">";
-                ViewBag.Message += getIcon(issueScore, 0, 3);
-                ViewBag.Message += "</td>";
-                ViewBag.Message += "<td>";
-                ViewBag.Message += projectId;
-                ViewBag.Message += "</td><td>";
-                ViewBag.Message += "<div><input type=\"button\" value=\"E-mail PM\"></div>";
+                ViewBag.Message += "<td title=\"" + issueScore.Item2 + "\">";
+                ViewBag.Message += issueScore.Item1;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "</tr>";
             }
-
-            ViewBag.Message += "</tbody></table>";
 
             dr.Close();
             con.Close();
             return View();
         }
 
-        public string getUserName(string id)
+        public string getIssueNum(string projectId, SqlConnection con)
+        {
+            string tooltip = "";
+            int yel = 0;
+            int red = 0;
+            int sev;
+            int total = 0;
+
+            SqlCommand staffCon = new SqlCommand("Select Impact * Priority as Severity from RaidIssue Where (IsDeleted = 0) AND (Status = 0) AND (ProjectRequestId = " + projectId + ")", con);
+            staffCon.CommandType = CommandType.Text;
+            SqlDataReader dr = staffCon.ExecuteReader();
+            while (dr.Read())
+            {
+                sev = Convert.ToInt32(dr["Severity"].ToString());
+                if (sev == 4)
+                {
+                    red++;
+                }
+                else if (sev < 4 && sev > 0)
+                {
+                    yel++;
+                }
+                total++;
+            }
+            if (yel > 0 || red > 0)
+            {
+                tooltip = "&#010;There are " + total + " Issues found.";
+                tooltip += "&#010;There are " + red + " High Impact Issues.";
+                tooltip += "&#010;There are " + yel + " Medium Impact Issues.";
+            }
+
+            return tooltip;
+        }
+
+        public Tuple<string, string> getUserName(string id)
         {
             string name = "N/A";
+            string email = "noemail@info.com";
             SqlConnection con = new SqlConnection("data source=dewdfctwsql0009,51433;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
             con.Open();
-            SqlCommand com = new SqlCommand("Select PersonId, DisplayName FROM CTW_COMPASS.dbo.[User]", con);
+            SqlCommand com = new SqlCommand("Select PersonId, DisplayName, UserName FROM CTW_COMPASS.dbo.[User]", con);
             com.CommandType = CommandType.Text;
             SqlDataReader dr = com.ExecuteReader();
             while (dr.Read())
@@ -113,12 +147,13 @@ namespace WebApplication16.Controllers
                 if(id == dr["PersonId"].ToString())
                 {
                     name = dr["DisplayName"].ToString();
+                    email = dr["UserName"].ToString();
                 }
             }
             dr.Close();
             con.Close();
 
-            return name;
+            return Tuple.Create<string,string>(name,email);
         }
 
         public ActionResult About()
@@ -250,13 +285,13 @@ namespace WebApplication16.Controllers
             else if (mMissed == 1)
             {
                 icon = "<img align=\"middle\" src=\"../Img/Traffic_Yellow.png\">";
-                tooltip = "Project is missing one milestone.";
+                tooltip = "Project is missing one milestone." + missingM(projectId,con);
             }
             else
             {
                 icon = "<img align=\"middle\" src=\"../Img/Traffic_Red.png\">";
                 
-                tooltip = "Project is missing " + mMissed + " milestones.";
+                tooltip = "Project is missing " + mMissed + " milestones." + missingM(projectId, con);
                
                 
             }
@@ -265,11 +300,33 @@ namespace WebApplication16.Controllers
             return Tuple.Create(icon, tooltip);
         }
 
+        public string missingM(string projectId, SqlConnection con)
+        {
+            SqlCommand com = new SqlCommand("Select Name, RequestId from Task" +
+                " WHERE (IsDeleted = 0) AND (IsSubMilestone = 1) AND (RequestedEndDate < GETDATE()) AND (PercentComplete < 100) AND (Completed = 0)" , con);
+            com.CommandType = CommandType.Text;
+            SqlDataReader dr = com.ExecuteReader();
+
+            string tooltip = "";
+
+            while (dr.Read())
+            {
+                if (dr["RequestId"].ToString() == projectId)
+                {
+                    tooltip += "&#010;- " + dr["Name"].ToString();
+                }
+            }
+
+
+
+            return tooltip;
+        }
+
         public Tuple<string,string> getRiskScore(string projectId,SqlConnection con)
         {
             //variable declaration
             string icon = "<img  align=\"middle\" src =\"../Img/Traffic_Green.png\">";
-            string tooltip = "RiskScore: n/a";
+            string tooltip = "RiskScore: 0";
 
             //Makes a new connection to the CompassStaffingLevel1 database
             SqlCommand staffCon = new SqlCommand("Select MAX(Severity) AS MaxSeverity, ProjectRequestId FROM RaidRisk" +
@@ -281,10 +338,62 @@ namespace WebApplication16.Controllers
                 if (projectId == dr["ProjectRequestId"].ToString())
                 {
                     icon = getIcon(dr["MaxSeverity"].ToString(), 4, 16);
-                    tooltip = "Risk Score: " + dr["MaxSeverity"].ToString();
+                    tooltip = "Risk Score: " + dr["MaxSeverity"].ToString() + getRiskNums(projectId, con);
                 }
             }
             return Tuple.Create(icon, tooltip);
+        }
+
+        public string getRiskNums(string projectId, SqlConnection con)
+        {
+            string tooltip = "";
+            int yel = 0;
+            int red = 0;
+            int sev;
+            int total = 0;
+
+            SqlCommand staffCon = new SqlCommand("Select Severity from RaidRisk Where (IsDeleted = 0) AND (Status = 0) AND (ProjectRequestId = "+projectId+")", con);
+            staffCon.CommandType = CommandType.Text;
+            SqlDataReader dr = staffCon.ExecuteReader();
+            while (dr.Read())
+            {
+                sev = Convert.ToInt32(dr["Severity"].ToString());
+                if (sev >=15)
+                {
+                    red++;
+                }
+                else if (sev < 15 && sev > 0)
+                {
+                    yel++;
+                }
+                total++;
+            }
+            if(yel>0 || red > 0)
+            {
+                tooltip = "&#010;There are " + total +" Risks found.";
+                tooltip += "&#010;There are " + red + " High Impact Risks.";
+                tooltip += "&#010;There are " + yel +" Medium Impact Risks.";
+            }
+
+                return tooltip;
+        }
+
+        public string getPMComment(string projectId,SqlConnection con)
+        {
+            string tooltip = "";
+            SqlCommand staffCon = new SqlCommand("Select ProjectReportId, Comment From ProjectReportSummaryItem", con);
+            staffCon.CommandType = CommandType.Text;
+            SqlDataReader dr = staffCon.ExecuteReader();
+
+            while (dr.Read())
+            {
+                if (dr["ProjectReportId"].ToString() == projectId)
+                {
+                    tooltip = dr["Comment"].ToString();
+                }
+            }
+
+            return tooltip;
         }
 
         public Tuple<string, string> getLastPMUpdate(string projectId, SqlConnection con)
@@ -295,7 +404,7 @@ namespace WebApplication16.Controllers
             string tooltip = "n/a";
 
             //Makes a new connection to the CompassStaffingLevel1 database
-            SqlCommand staffCon = new SqlCommand("Select MAX(ReportPeriodEndingDate) AS Last_PM_Update_Date, ProjectRequestId from ProjectReport WHERE (Status=2) GROUP BY ProjectRequestId", con);
+            SqlCommand staffCon = new SqlCommand("Select Top 1 MAX(ReportPeriodEndingDate) AS Last_PM_Update_Date, ProjectRequestId, Id from ProjectReport WHERE (Status=2) AND (ProjectRequestId = "+projectId+") GROUP BY ProjectRequestId, Id Order By Max([ReportPeriodEndingDate]) desc", con);
             staffCon.CommandType = CommandType.Text;
             SqlDataReader dr = staffCon.ExecuteReader();
 
@@ -320,20 +429,25 @@ namespace WebApplication16.Controllers
                         {
                             color = "green";
                             icon= "<img  align=\"middle\" src =\"../Img/Traffic_Green.png\">";
+                            tooltip = getPMComment(dr["Id"].ToString(),con);
                         }
                         else if (timeDifference >= 15)
                         {
                             color = "red";
                             icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                            tooltip = "It has been " + timeDifference.ToString() +
+                            " business days since PM made an update the project therefore it is showing as " + color +
+                            ". Last PM Update date was " + datetext;
                         }
                         else
                         {
                             color = "yellow";
                             icon = "<img align=\"middle\" src =\"../Img/Traffic_Yellow.png\">";
-                        }
-                        tooltip = "It has been " + timeDifference.ToString() +
+                            tooltip = "It has been " + timeDifference.ToString() +
                             " business days since PM made an update the project therefore it is showing as " + color +
                             ". Last PM Update date was " + datetext;
+                        }
+                        
                                                   
 
 
@@ -348,69 +462,32 @@ namespace WebApplication16.Controllers
         public Tuple<string,string> getStaffedDataLvl1(string projectId, SqlConnection staffData)
         {
             //variable declaration
-            double tempTimeDifference=0;
-            int maxTimeDifference=0;
-            bool foundData = false;
+           
             string icon = "n/a";
-            string tooltip;
+            string tooltip = "n/a";
 
             //Makes a new connection to the CompassStaffingLevel1 database
-            SqlCommand staffCon = new SqlCommand("Select Id, RequestedEndDate, RequestId from Task" +
-                " WHERE (IsDeleted = 0) AND (IsMilestone = 0) AND (IsSubMilestone = 0) AND (IsApprovalTask = 0) AND (IsPrimaryTask = 0) AND (IsTaskList = 0) AND (Status <> 4) AND (AssignedToUserId IS NULL)", staffData);
+            SqlCommand staffCon = new SqlCommand("Select Count(Name) AS Num, RequestId from Task" +
+                " WHERE (IsDeleted = 0) AND (IsMilestone = 0) AND (IsSubMilestone = 0) AND (IsApprovalTask = 0) AND (ParentTaskId is not null) AND (IsHeaderTask = 0) AND (IsTaskList=0) GROUP BY RequestId", staffData);
             staffCon.CommandType = CommandType.Text;
             SqlDataReader dr = staffCon.ExecuteReader();
 
-            //Reads through every row in the database. If it finds a row with a matching
-            //project id, it then checks if the date field is empty. If it is not empty
-            //it calculated how long the project is staffed for. Then if the staffed
-            //time frame is greater then the previous it replace the previous max with
-            //the current time frame it just calculated
             while (dr.Read())
             {
                 if (projectId == dr["RequestId"].ToString())
                 {
-                    
-                    if (dr["RequestedEndDate"].ToString()!="")
+                    if (dr["Num"].ToString() == "0")
                     {
-                        foundData = true;
-                        DateTime staff = dr.GetDateTime(1);
-                        DateTime today = DateTime.Now.ToUniversalTime();
-                        tempTimeDifference = GetBusinessDays(today, staff);
-                        if (tempTimeDifference > maxTimeDifference)
-                        {
-                            maxTimeDifference = (int)tempTimeDifference;
-                        }
+                        icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                        tooltip = "There is no workplan for this project";
+                    }
+                    else
+                    {
+                        return getStaffedDataLvl2(projectId, staffData);
                     }
                 }
             }
-            //If data was found it sets the icon to the appropriate color and adjusts
-            //the tooltip text
-            if (foundData)
-            {
-                icon = getIcon(maxTimeDifference, 56, 21);
-                tooltip = "Project is staffed for the next " + maxTimeDifference + " days.";
-            }
-            //If data was not found it calls the getStaffedDataLvl2 function to check the second
-            //database for staffing
-            else
-            {
-                Tuple<string, string, bool> staffedLevel2 = getStaffedDataLvl2(projectId,staffData);
-                //If the getStaffedDataLvl2 function finds data
-                //then it copies the tooltip and icon the function returned to icon and tooltip
-                if (staffedLevel2.Item3)
-                {
-                    icon = staffedLevel2.Item1;
-                    tooltip = staffedLevel2.Item2;
-                }
-                //If nothing was found for a project tooltip and icon gets set to the below t
-                else
-                {
-                    tooltip = "Project is not assigned to any user.";
-                    icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
-                }
-                
-            }
-            dr.Close();
+            
 
             //returnts a tuple of the icon text and tooltip text
             return Tuple.Create(icon, tooltip);
@@ -419,16 +496,16 @@ namespace WebApplication16.Controllers
         //Used to check if a project is in the CompassStaffingLevel2 database. Returns a tuple
         //of the icon text, tooltip text, and whether it found any data. Requires a project id
         //and an established connection to the database
-        public Tuple<string,string,bool> getStaffedDataLvl2(string projectId, SqlConnection con)
+        public Tuple<string,string> getStaffedDataLvl2(string projectId, SqlConnection con)
         {
             //variable declaration
-            string icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
-            bool found = false;
-            string tooltip = "Project is not assigned to any user.";
+            string icon = "<img align=\"middle\" src =\"../Img/Traffic_Green.png\">";
+            string tooltip = "Project is fully staffed";
 
             //Makes a new connection to the CompassStaffingLevel2 database
-            SqlCommand staffCon = new SqlCommand("Select Id, RequestId from Task" +
-                " WHERE (IsDeleted = 0) AND (IsMilestone = 0) AND (IsSubMilestone = 0) AND (IsApprovalTask = 0) AND (IsPrimaryTask = 0) AND (IsTaskList = 0) AND (Status <> 4) AND (AssignedToUserId IS NOT NULL)", con);
+            SqlCommand staffCon = new SqlCommand("Select Count(Name) AS Num, RequestedStartDate from Task" +
+                " WHERE (IsDeleted=0) AND (IsApprovalTask = 0) AND (ParentTaskId is not null) AND (IsMilestone=0) AND (IsHeaderTask =0) AND (IsTaskList=0) AND (IsSubMilestone = 0) AND (AssignedToUserId is null) AND (RequestId ="+
+                projectId + ") GROUP BY RequestedStartDate", con);
             staffCon.CommandType = CommandType.Text;
             SqlDataReader dr = staffCon.ExecuteReader();
 
@@ -436,17 +513,39 @@ namespace WebApplication16.Controllers
             //it sets found to true, icon to green, and the tooltip text.
             while(dr.Read())
             {
-                if (projectId == dr["RequestId"].ToString())
+                if ("0" == dr["Num"].ToString())
                 {
-                    found = true;
+                    
                     icon = "<img align=\"middle\" src =\"../Img/Traffic_Green.png\">";
-                    tooltip = "Project is not assingned to an user.";
+                    tooltip = "Project is fully staffed";
+                }
+                else if(dr["RequestedStartDate"].ToString() != "")
+                {
+                    DateTime startdate = Convert.ToDateTime(dr["RequestedStartDate"]);
+                    DateTime today = DateTime.Now.ToUniversalTime();
+                    int timeDifference = GetBusinessDays(today, startdate);
+                    int greenday = GetBusinessDays(today, DateTime.Now.AddDays(64));
+                    if (timeDifference < 0)
+                    {
+                        icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                        tooltip = "A task in the past is unstaffed.";
+                    }
+                    else if (timeDifference >= 0 && timeDifference <= greenday)
+                    {
+                        icon = "<img align=\"middle\" src =\"../Img/Traffic_Yellow.png\">";
+                        tooltip = "A task in " + timeDifference + " days is unstaffed.";
+                    }
+                    else
+                    {
+                        icon = "<img align=\"middle\" src =\"../Img/Traffic_Green.png\">";
+                        tooltip = "A task in " + timeDifference + " days is unstaffed.";
+                    }
                 }
             }
 
             //returns a tuple of the icon text, tooltip text, and whether it found
             //the data or not
-            return Tuple.Create(icon, tooltip, found);
+            return Tuple.Create(icon, tooltip);
         }
 
         //used to get the icon image string. Requires a string containing a number,
@@ -529,11 +628,13 @@ namespace WebApplication16.Controllers
         //For each database you want to access at the same time you need to create another function and
         //open the database from there.
                
-        public int GetIssues(string projectid, SqlConnection con)
+        public Tuple<string, string> GetIssues(string projectid, SqlConnection con)
         {
             //variable declaration
             int tempScore=0;
             int maxScore=0;
+            string tooltip;
+            string icon;
 
             //connection to issues database
             SqlCommand issueConnection = new SqlCommand("Select Id, Impact, Priority, ProjectRequestId from RaidIssue" +
@@ -558,8 +659,10 @@ namespace WebApplication16.Controllers
             }
             issueData.Close();
 
+            tooltip = "Issue Score: " + maxScore + getIssueNum(projectid, con);
+            icon = getIcon(maxScore.ToString(), 0, 4);
             //returns the maxscore
-            return maxScore;
+            return Tuple.Create<string, string>(icon, tooltip);
         }
 
         public ActionResult Contact()

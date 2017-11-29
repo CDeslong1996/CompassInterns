@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "CompassReport";
+}
+
+<style>
+    /*table, tr, th {
+        border: 1px solid black;
+    }*/
+
+    td:last-child {
+        border:none;
+    }
+
+    table {
+        border-right:0;
+        border-bottom:0;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td,th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+</style>
+
+<h1>Live Status Report</h1>
+<br />
+<p>Search table: <input type="text" id="searchData" oninput="searchTable()" placeholder="Search table" /></p>
+<br />
+<br />
+@Html.Raw(ViewBag.Message)
+
+<script>
+    function searchTable() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchData");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("projectDataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found || tr[i].id=="tableHeaders" || filter=="") {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("projectDataTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.getElementsByTagName("tr");
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[n];
+                y = rows[i + 1].getElementsByTagName("td")[n];
+                if (dir == "desc") {
+                    if (x.innerHTML.indexOf('Green')>-1) {
+                        if (y.innerHTML.indexOf('Yellow') > -1 || y.innerHTML.indexOf('Red')>-1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if (x.innerHTML.indexOf('Yellow')>-1) {
+                        if (y.innerHTML.indexOf('Red')>-1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                else if (dir == "asc") {
+                    if (x.innerHTML.indexOf('Red')>-1) {
+                        if (y.innerHTML.indexOf('Yellow')>-1 || y.innerHTML.indexOf('Green')>-1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    else if (x.innerHTML.indexOf('Yellow')>-1) {
+                        if (y.innerHTML.indexOf('Green')>-1) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            }
+            else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
