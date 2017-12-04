@@ -8,8 +8,14 @@ using System.Data.SqlClient;
 
 namespace WebApplication16.Controllers
 {
+    
     public class HomeController : Controller
     {
+        public ActionResult nodBot()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -25,7 +31,7 @@ namespace WebApplication16.Controllers
             List<string> dataSql = new List<string>();
             ViewBag.List = dataSql;
 
-            SqlConnection con = new SqlConnection("data source=dewdfctwsql0009,51433;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
+            SqlConnection con = new SqlConnection("data source=dewdfctosqli32,50802;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
             con.Open();
             SqlCommand com = new SqlCommand("Select Task.RequestId, Task.Name, ProjectRequest.ProjectManagerId, ProjectRequest.ProjectSponsorId, GETDATE() AS Data_Date" +
                 " FROM Task INNER JOIN ProjectRequest ON ProjectRequest.Id = Task.RequestId" +
@@ -37,8 +43,10 @@ namespace WebApplication16.Controllers
             com.CommandType = CommandType.Text;
             SqlDataReader dr = com.ExecuteReader();
 
+            int totalProjects = 0;
             string pmId, psId, projectId, title;
-            Tuple<string, string> staffed, pmUpdateStatus, riskScore, milestone, issueScore, pminfo;
+            Tuple<string, string> staffed, pmUpdateStatus, pminfo;
+            Tuple<string, string, string> riskScore, milestone, issueScore;
             List<string> alreadyDisplayed = new List<string>();
 
             /*ViewBag.Message += "<table cellpadding=\"7\" id=\"projectDataTable\" border=\"1\"><tr id=\"tableHeaders\">" +
@@ -55,6 +63,7 @@ namespace WebApplication16.Controllers
 
             while (dr.Read())
             {
+                totalProjects++;
                 projectId = dr["RequestId"].ToString();
                 title = dr["Name"].ToString();
                 pmId = dr["ProjectManagerId"].ToString();
@@ -76,19 +85,19 @@ namespace WebApplication16.Controllers
                 ViewBag.Message += "<td>";
                 ViewBag.Message += "<a href=\"mailto:"+pminfo.Item2+"\">"+pminfo.Item1+"</a>";
                 ViewBag.Message += "</td>";
-                ViewBag.Message += "<td title=\"" + pmUpdateStatus.Item2 + "\">";
+                ViewBag.Message += "<td title=\"" + pmUpdateStatus.Item2 + "\" onclick=\"alertTooltip(\'"+pmUpdateStatus.Item2+"\')\">";
                 ViewBag.Message += pmUpdateStatus.Item1;
                 ViewBag.Message += "</td>";
-                ViewBag.Message += "<td title=\"" + milestone.Item2 + "\">";
+                ViewBag.Message += "<td title=\"" + milestone.Item2 + "\" onclick=\"alertTooltip(\'" + milestone.Item3 + "\')\">";
                 ViewBag.Message += milestone.Item1;
                 ViewBag.Message += "</td>";
-                ViewBag.Message += "<td title=\"" + staffed.Item2 + "\">";
+                ViewBag.Message += "<td title=\"" + staffed.Item2 + "\" onclick=\"alertTooltip(\'" + staffed.Item2 + "\')\">";
                 ViewBag.Message += staffed.Item1;
                 ViewBag.Message += "</td>";
-                ViewBag.Message += "<td title=\"" + riskScore.Item2 + "\">";
+                ViewBag.Message += "<td title=\"" + riskScore.Item2 + "\" onclick=\"alertTooltip(\'" + riskScore.Item3 + "\')\">";
                 ViewBag.Message += riskScore.Item1;
                 ViewBag.Message += "</td>";
-                ViewBag.Message += "<td title=\"" + issueScore.Item2 + "\">";
+                ViewBag.Message += "<td title=\"" + issueScore.Item2 + "\" onclick=\"alertTooltip(\'" + issueScore.Item3 + "\')\">";
                 ViewBag.Message += issueScore.Item1;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "</tr>";
@@ -96,12 +105,14 @@ namespace WebApplication16.Controllers
 
             dr.Close();
             con.Close();
+            ViewBag.totalP = totalProjects;
             return View();
         }
 
-        public string getIssueNum(string projectId, SqlConnection con)
+        public Tuple<string,string> getIssueNum(string projectId, SqlConnection con)
         {
             string tooltip = "";
+            string copytext = "";
             int yel = 0;
             int red = 0;
             int sev;
@@ -128,16 +139,22 @@ namespace WebApplication16.Controllers
                 tooltip = "&#010;There are " + total + " Issues found.";
                 tooltip += "&#010;There are " + red + " High Impact Issues.";
                 tooltip += "&#010;There are " + yel + " Medium Impact Issues.";
+                tooltip += "&#010;There are " + (total-red-yel) + " Low Impact Issues.";
+                copytext = "There are " + total + " Risks found.";
+                copytext += " There are " + red + " High Impact Risks.";
+                copytext += " There are " + yel + " Medium Impact Risks.";
+                copytext += " There are " + (total - red - yel) + " Low Impact Risks.";
             }
 
-            return tooltip;
+            return Tuple.Create<string, string>(tooltip, copytext);
+
         }
 
         public Tuple<string, string> getUserName(string id)
         {
             string name = "N/A";
             string email = "noemail@info.com";
-            SqlConnection con = new SqlConnection("data source=dewdfctwsql0009,51433;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
+            SqlConnection con = new SqlConnection("data source=dewdfctosqli32,50802;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
             con.Open();
             SqlCommand com = new SqlCommand("Select PersonId, DisplayName, UserName FROM CTW_COMPASS.dbo.[User]", con);
             com.CommandType = CommandType.Text;
@@ -255,7 +272,7 @@ namespace WebApplication16.Controllers
             return View();
         }
 
-        public Tuple<string, string> getMilestone(string projectId, SqlConnection con)
+        public Tuple<string, string,string> getMilestone(string projectId, SqlConnection con)
         {
             SqlCommand com = new SqlCommand("Select Count(RequestId) As CountNum, RequestId from Task" +
                 " WHERE (IsDeleted = 0) AND (IsSubMilestone = 1) AND (RequestedEndDate < GETDATE()) AND (PercentComplete < 100) AND (Completed = 0)" +
@@ -264,6 +281,7 @@ namespace WebApplication16.Controllers
             SqlDataReader dr = com.ExecuteReader();
             string icon = "n/a";
             string tooltip = "n/a";
+            Tuple<string, string> text = missingM(projectId, con);
             
             int mMissed=0;
             string[] mText = new string[100];
@@ -285,22 +303,22 @@ namespace WebApplication16.Controllers
             else if (mMissed == 1)
             {
                 icon = "<img align=\"middle\" src=\"../Img/Traffic_Yellow.png\">";
-                tooltip = "Project is missing one milestone." + missingM(projectId,con);
+                tooltip = "Project is missing one milestone." + text.Item1;
             }
             else
             {
                 icon = "<img align=\"middle\" src=\"../Img/Traffic_Red.png\">";
                 
-                tooltip = "Project is missing " + mMissed + " milestones." + missingM(projectId, con);
+                tooltip = "Project is missing " + mMissed + " milestones." + text.Item1;
                
                 
             }
 
 
-            return Tuple.Create(icon, tooltip);
+            return Tuple.Create(icon, tooltip, text.Item2);
         }
 
-        public string missingM(string projectId, SqlConnection con)
+        public Tuple<string,string> missingM(string projectId, SqlConnection con)
         {
             SqlCommand com = new SqlCommand("Select Name, RequestId from Task" +
                 " WHERE (IsDeleted = 0) AND (IsSubMilestone = 1) AND (RequestedEndDate < GETDATE()) AND (PercentComplete < 100) AND (Completed = 0)" , con);
@@ -308,25 +326,28 @@ namespace WebApplication16.Controllers
             SqlDataReader dr = com.ExecuteReader();
 
             string tooltip = "";
+            string copytext = "";
 
             while (dr.Read())
             {
                 if (dr["RequestId"].ToString() == projectId)
                 {
                     tooltip += "&#010;- " + dr["Name"].ToString();
+                    copytext += dr["Name"].ToString() + ". ";
                 }
             }
 
 
 
-            return tooltip;
+            return Tuple.Create<string,string>(tooltip,copytext);
         }
 
-        public Tuple<string,string> getRiskScore(string projectId,SqlConnection con)
+        public Tuple<string,string,string> getRiskScore(string projectId,SqlConnection con)
         {
             //variable declaration
             string icon = "<img  align=\"middle\" src =\"../Img/Traffic_Green.png\">";
             string tooltip = "RiskScore: 0";
+            Tuple<string, string> text = getRiskNums(projectId, con);
 
             //Makes a new connection to the CompassStaffingLevel1 database
             SqlCommand staffCon = new SqlCommand("Select MAX(Severity) AS MaxSeverity, ProjectRequestId FROM RaidRisk" +
@@ -338,15 +359,16 @@ namespace WebApplication16.Controllers
                 if (projectId == dr["ProjectRequestId"].ToString())
                 {
                     icon = getIcon(dr["MaxSeverity"].ToString(), 4, 16);
-                    tooltip = "Risk Score: " + dr["MaxSeverity"].ToString() + getRiskNums(projectId, con);
+                    tooltip = "Risk Score: " + dr["MaxSeverity"].ToString() + text.Item1;
                 }
             }
-            return Tuple.Create(icon, tooltip);
+            return Tuple.Create(icon, tooltip, text.Item2);
         }
 
-        public string getRiskNums(string projectId, SqlConnection con)
+        public Tuple<string,string> getRiskNums(string projectId, SqlConnection con)
         {
             string tooltip = "";
+            string copytext = "";
             int yel = 0;
             int red = 0;
             int sev;
@@ -373,9 +395,14 @@ namespace WebApplication16.Controllers
                 tooltip = "&#010;There are " + total +" Risks found.";
                 tooltip += "&#010;There are " + red + " High Impact Risks.";
                 tooltip += "&#010;There are " + yel +" Medium Impact Risks.";
+                tooltip += "&#010;There are " + (total - red - yel) + " Low Impact Risks.";
+                copytext = "There are " + total + " Risks found.";
+                copytext += " There are " + red + " High Impact Risks.";
+                copytext += " There are " + yel + " Medium Impact Risks.";
+                copytext += " There are " + (total - red - yel) + " Low Impact Risks.";
             }
 
-                return tooltip;
+                return Tuple.Create<string,string>(tooltip,copytext);
         }
 
         public string getPMComment(string projectId,SqlConnection con)
@@ -530,10 +557,15 @@ namespace WebApplication16.Controllers
                         icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
                         tooltip = "A task in the past is unstaffed.";
                     }
-                    else if (timeDifference >= 0 && timeDifference <= greenday)
+                    else if (timeDifference > 0 && timeDifference <= greenday)
                     {
                         icon = "<img align=\"middle\" src =\"../Img/Traffic_Yellow.png\">";
                         tooltip = "A task in " + timeDifference + " days is unstaffed.";
+                    }
+                    else if(timeDifference==0)
+                    {
+                        icon = "<img align=\"middle\" src =\"../Img/Traffic_Red.png\">";
+                        tooltip = "A current task is unstaffed.";
                     }
                     else
                     {
@@ -628,13 +660,14 @@ namespace WebApplication16.Controllers
         //For each database you want to access at the same time you need to create another function and
         //open the database from there.
                
-        public Tuple<string, string> GetIssues(string projectid, SqlConnection con)
+        public Tuple<string, string,string> GetIssues(string projectid, SqlConnection con)
         {
             //variable declaration
             int tempScore=0;
             int maxScore=0;
             string tooltip;
             string icon;
+            Tuple<string, string> text = getIssueNum(projectid, con);
 
             //connection to issues database
             SqlCommand issueConnection = new SqlCommand("Select Id, Impact, Priority, ProjectRequestId from RaidIssue" +
@@ -659,10 +692,10 @@ namespace WebApplication16.Controllers
             }
             issueData.Close();
 
-            tooltip = "Issue Score: " + maxScore + getIssueNum(projectid, con);
+            tooltip = "Issue Score: " + maxScore + text.Item1;
             icon = getIcon(maxScore.ToString(), 0, 4);
             //returns the maxscore
-            return Tuple.Create<string, string>(icon, tooltip);
+            return Tuple.Create<string, string, string>(icon, tooltip, text.Item2);
         }
 
         public ActionResult Contact()
@@ -688,7 +721,7 @@ namespace WebApplication16.Controllers
             List<string> dataSql = new List<string>();
             ViewBag.List = dataSql;
             // Connection to SQL Database //
-            SqlConnection con = new SqlConnection("data source=dewdfctwsql0009,51433;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
+            SqlConnection con = new SqlConnection("data source=dewdfctosqli32,50802;initial catalog=CTW_COMPASS;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
             con.Open();
             SqlCommand com = new SqlCommand("Select Task.RequestId, Task.Name, Task.CreatedDate, ProjectRequest.ProjectPhase from Task, ProjectRequest where ProjectRequest.id = Task.RequestId and Task.IsDeleted = 0 and Task.IsPrimaryTask = 1" +
                 "and (ProjectPhase = -1 or ProjectPhase = 1 or ProjectPhase = 2 or ProjectPhase = 3 or ProjectPhase = 4 or ProjectPhase = 5) and Task.RequestId <> 49", con);

@@ -217,10 +217,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/28/2015 04:04:30</publishTime>
     </File>
     <File Include="bin/WebApplication16.dll">
-      <publishTime>11/29/2017 12:56:46</publishTime>
+      <publishTime>12/04/2017 12:43:19</publishTime>
     </File>
     <File Include="bin/WebApplication16.pdb">
-      <publishTime>11/29/2017 12:56:46</publishTime>
+      <publishTime>12/04/2017 12:43:19</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>09/10/2013 17:28:38</publishTime>
@@ -260,6 +260,24 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Global.asax">
       <publishTime>10/17/2017 08:25:58</publishTime>
+    </File>
+    <File Include="Img/281317_HardHat_R_blue.png">
+      <publishTime>11/30/2017 10:23:24</publishTime>
+    </File>
+    <File Include="Img/IssueDef.png">
+      <publishTime>11/30/2017 09:54:49</publishTime>
+    </File>
+    <File Include="Img/RiskDef.png">
+      <publishTime>11/30/2017 09:54:30</publishTime>
+    </File>
+    <File Include="Img/Traffic_Green.png">
+      <publishTime>09/26/2017 04:09:16</publishTime>
+    </File>
+    <File Include="Img/Traffic_Red.png">
+      <publishTime>09/26/2017 04:09:16</publishTime>
+    </File>
+    <File Include="Img/Traffic_Yellow.png">
+      <publishTime>09/26/2017 04:09:16</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>10/17/2017 08:26:00</publishTime>
@@ -304,16 +322,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/15/2017 13:38:32</publishTime>
     </File>
     <File Include="Views/Home/CompassReport.cshtml">
-      <publishTime>11/29/2017 12:28:13</publishTime>
+      <publishTime>12/04/2017 12:48:09</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>11/29/2017 12:24:29</publishTime>
+      <publishTime>11/29/2017 13:38:28</publishTime>
     </File>
     <File Include="Views/Home/Help.cshtml">
-      <publishTime>11/29/2017 12:45:18</publishTime>
+      <publishTime>11/30/2017 10:07:54</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>10/17/2017 08:25:58</publishTime>
+      <publishTime>11/30/2017 10:28:42</publishTime>
+    </File>
+    <File Include="Views/Home/nodBot.cshtml">
+      <publishTime>11/30/2017 15:35:09</publishTime>
     </File>
     <File Include="Views/Home/ProjectByStatus.cshtml">
       <publishTime>11/16/2017 10:13:16</publishTime>
@@ -322,7 +343,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 08:25:58</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/29/2017 12:35:28</publishTime>
+      <publishTime>11/29/2017 13:38:56</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>10/17/2017 08:25:58</publishTime>

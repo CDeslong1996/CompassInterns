@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "NodBot";
+}
+
+<iframe src="https://www.gifclip.info/embed.php?id=545114c9e620b5ccf3a36095cf3f1c3a03686fa46289de7c3c6854c540a0656f" width="640" height="480" frameBorder="0" allowFullScreen>
+    </iframe>
+<p>
+    <a href="https://www.gifclip.info/gif.php?id=545114c9e620b5ccf3a36095cf3f1c3a03686fa46289de7c3c6854c540a0656f">via GifClip</a>
+</p>
+<input type="text" id="problems"/><button id="submit" onclick="nodBot()" value="0">Done</button>
+<div id="text"></div>
+
+<script>
+    function nodBot() {
+        var text = document.getElementById("submit");
+        var count = text.value;
+        var response = document.getElementById("text");
+        if (count == 0) {
+            response.innerHTML = "I know, I know.";
+            count++
+            
+        }
+        else if (count == 1) {
+            count++
+            response.innerHTML = "That must be really hard for you.";
+            
+        }
+        else if (count == 2) {
+            count = 0;
+            response.innerHTML = "Nod-bot is so sorry you have to go through this.";
+        }
+        text.value = count;
+
+    }
+</script> 
+

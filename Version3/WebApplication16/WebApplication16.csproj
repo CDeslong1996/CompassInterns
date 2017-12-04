@@ -156,6 +156,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Img\281317_HardHat_R_blue.png" />
+    <Content Include="Img\IssueDef.png" />
+    <Content Include="Img\RiskDef.png" />
+    <Content Include="Img\Traffic_Green.png" />
+    <Content Include="Img\Traffic_Red.png" />
+    <Content Include="Img\Traffic_Yellow.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -192,6 +198,7 @@
     <Content Include="Views\Home\ProjectByStatus.cshtml" />
     <Content Include="Views\Home\CompassReport.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
+    <Content Include="Views\Home\nodBot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

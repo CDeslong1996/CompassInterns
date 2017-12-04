@@ -69,8 +69,11 @@
             }
             document.getElementById("date").innerHTML ="Data is valid as of: "+ m + "/" + d + "/" + y + " " + h + ":" + min + ":" + s + " " + ap;
         </script>
+        <br />
+        There are @Html.Raw(ViewBag.totalP) in Compass for 2017.
     </span>
 </header>
+<p align="right">Need help understanding the table? Check out our <a href="http://dewdfcto205:8000/Home/Help">Help page</a>!</p>
 <p>Search table: <input type="text" id="searchData" oninput="searchTable()" placeholder="Search table" /></p>
 <button onclick="reset()">Reset Filters</button>
 <br />
@@ -138,18 +141,24 @@
         filter = input.value.toUpperCase();
         table = document.getElementById("projectDataTable");
         tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td");
-            for (j = 0; j < td.length; j++) {
-                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    found = true;
+        if (filter == "I NEED TO VENT") {
+            nodBot();
+            return;
+        }
+        else {
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
                 }
-            }
-            if (found || tr[i].id == "tableHeaders" || filter == "") {
-                tr[i].style.display = "";
-                found = false;
-            } else {
-                tr[i].style.display = "none";
+                if (found || tr[i].id == "tableHeaders" || filter == "") {
+                    tr[i].style.display = "";
+                    found = false;
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
     }
@@ -279,5 +288,16 @@
         document.getElementById("rs").value = "All";
         document.getElementById("staff").value = "All";
         document.getElementById("ms").value = "All";
+    }
+
+    function alertTooltip(n) {
+        var win = window.open();
+        win.document.write(n);
+    }
+
+    function nodBot() {
+        var win = window.open("http://dewdfcto205:8000/Home/nodBot");
+        return;
+        
     }
 </script>
