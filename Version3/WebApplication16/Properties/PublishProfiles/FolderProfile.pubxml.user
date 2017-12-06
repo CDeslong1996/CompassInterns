@@ -241,7 +241,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/26/2017 04:09:16</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>10/17/2017 08:25:58</publishTime>
+      <publishTime>12/04/2017 14:02:37</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>10/17/2017 08:25:58</publishTime>
@@ -325,13 +325,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/04/2017 12:48:09</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>11/29/2017 13:38:28</publishTime>
+      <publishTime>12/04/2017 14:06:56</publishTime>
     </File>
     <File Include="Views/Home/Help.cshtml">
-      <publishTime>11/30/2017 10:07:54</publishTime>
+      <publishTime>12/04/2017 14:06:53</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/30/2017 10:28:42</publishTime>
+      <publishTime>12/04/2017 13:01:53</publishTime>
     </File>
     <File Include="Views/Home/nodBot.cshtml">
       <publishTime>11/30/2017 15:35:09</publishTime>
@@ -343,7 +343,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 08:25:58</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/29/2017 13:38:56</publishTime>
+      <publishTime>12/04/2017 14:08:31</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>10/17/2017 08:25:58</publishTime>
@@ -352,7 +352,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/17/2017 08:25:58</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/15/2017 14:03:01</publishTime>
+      <publishTime>12/04/2017 13:03:45</publishTime>
     </File>
   </ItemGroup>
 </Project>

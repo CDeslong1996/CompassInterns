@@ -11,22 +11,14 @@ namespace WebApplication16.Controllers
     
     public class HomeController : Controller
     {
+        //View for NodBot page
         public ActionResult nodBot()
         {
             return View();
         }
 
+
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Help()
-        {
-            return View();
-        }
-
-        public ActionResult CompassReport()
         {
             List<string> dataSql = new List<string>();
             ViewBag.List = dataSql;
@@ -73,14 +65,102 @@ namespace WebApplication16.Controllers
                 staffed = getStaffedDataLvl1(projectId, con);
                 riskScore = getRiskScore(projectId, con);
                 issueScore = GetIssues(projectId, con);
-                pminfo = getUserName(pmId);
+                pminfo = getUserName1(pmId);
 
                 ViewBag.Message += "<tr>";
                 ViewBag.Message += "<td>";
                 ViewBag.Message += title;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td>";
-                ViewBag.Message += getUserName(psId).Item1;
+                ViewBag.Message += getUserName1(psId).Item1;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td>";
+                ViewBag.Message += "<a href=\"mailto:" + pminfo.Item2 + "\">" + pminfo.Item1 + "</a>";
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td title=\"" + pmUpdateStatus.Item2 + "\" onclick=\"alertTooltip(\'" + pmUpdateStatus.Item2 + "\')\">";
+                ViewBag.Message += pmUpdateStatus.Item1;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td title=\"" + milestone.Item2 + "\" onclick=\"alertTooltip(\'" + milestone.Item3 + "\')\">";
+                ViewBag.Message += milestone.Item1;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td title=\"" + staffed.Item2 + "\" onclick=\"alertTooltip(\'" + staffed.Item2 + "\')\">";
+                ViewBag.Message += staffed.Item1;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td title=\"" + riskScore.Item2 + "\" onclick=\"alertTooltip(\'" + riskScore.Item3 + "\')\">";
+                ViewBag.Message += riskScore.Item1;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td title=\"" + issueScore.Item2 + "\" onclick=\"alertTooltip(\'" + issueScore.Item3 + "\')\">";
+                ViewBag.Message += issueScore.Item1;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "</tr>";
+            }
+
+            dr.Close();
+            con.Close();
+            ViewBag.totalP = totalProjects;
+            return View();
+        }
+
+        public ActionResult Help()
+        {
+            return View();
+        }
+
+        public ActionResult CompassReport()
+        {
+            List<string> dataSql = new List<string>();
+            ViewBag.List = dataSql;
+
+            SqlConnection con = new SqlConnection("data source=dewdfcto223.wdf.global.corp.sap;initial catalog=Compass_PRD;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
+            con.Open();
+            SqlCommand com = new SqlCommand("Select Task.RequestId, Task.Name, ProjectRequest.ProjectManagerId, ProjectRequest.ProjectSponsorId, GETDATE() AS Data_Date" +
+                " FROM Task INNER JOIN ProjectRequest ON ProjectRequest.Id = Task.RequestId" +
+                " WHERE(Task.IsDeleted = 0) AND(Task.SequenceNumber = 0) AND(Task.AssignationDate IS NULL) AND(Task.OwnershipStatus = 0)" +
+                " AND (Task.AssignedToUserId IS NULL) AND (Task.Name NOT LIKE 'Fixed%') AND (Task.Name NOT LIKE '1Hello%')" +
+                " AND (Task.Name NOT LIKE 'FM Test%') AND (Task.Name NOT LIKE 'MHE%') AND (Task.Name NOT LIKE 'FM PRD%')" +
+                " AND (Task.Name NOT LIKE '---DEMO%') AND (Task.Name NOT LIKE 'Test Project') AND (Task.Name NOT LIKE 'testmhe')" +
+                " AND (ProjectRequest.ProjectPhase = 2 OR ProjectRequest.ProjectPhase = 5) ORDER BY Task.RequestId", con);
+            com.CommandType = CommandType.Text;
+            SqlDataReader dr = com.ExecuteReader();
+
+            int totalProjects = 0;
+            string pmId, psId, projectId, title;
+            Tuple<string, string> staffed, pmUpdateStatus, pminfo;
+            Tuple<string, string, string> riskScore, milestone, issueScore;
+            List<string> alreadyDisplayed = new List<string>();
+
+            /*ViewBag.Message += "<table cellpadding=\"7\" id=\"projectDataTable\" border=\"1\"><tr id=\"tableHeaders\">" +
+                "<th>Project Name</th>" +
+                "<th>Project Sponsor</th>" +
+                "<th>Project Manager</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(3)\"><u>PM Update Status<br><select><option selected=\"selected\" value=\"All\">All</option><option value=\"Green\">Green</option><option value=\"Yellow\">Yellow</option><option value=\"Red\">Red</option></select></th>" +
+                "<th class=\"sort\" onclick=\"sortTable(4)\"><u>Milestone Status</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(5)\"><u>Staffed</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(6)\"><u>Risk Score</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(7)\"><u>Issue Score</th>" +
+                "<th class=\"sort\" onclick=\"sortTable(8)\">Project Id</th>" +
+                "</tr><tbody>";*/
+
+            while (dr.Read())
+            {
+                totalProjects++;
+                projectId = dr["RequestId"].ToString();
+                title = dr["Name"].ToString();
+                pmId = dr["ProjectManagerId"].ToString();
+                psId = dr["ProjectSponsorId"].ToString();
+                milestone = getMilestone(projectId, con);
+                pmUpdateStatus = getLastPMUpdate(projectId, con);
+                staffed = getStaffedDataLvl1(projectId, con);
+                riskScore = getRiskScore(projectId, con);
+                issueScore = GetIssues(projectId, con);
+                pminfo = getUserName2(pmId);
+
+                ViewBag.Message += "<tr>";
+                ViewBag.Message += "<td>";
+                ViewBag.Message += title;
+                ViewBag.Message += "</td>";
+                ViewBag.Message += "<td>";
+                ViewBag.Message += getUserName2(psId).Item1;
                 ViewBag.Message += "</td>";
                 ViewBag.Message += "<td>";
                 ViewBag.Message += "<a href=\"mailto:"+pminfo.Item2+"\">"+pminfo.Item1+"</a>";
@@ -150,7 +230,7 @@ namespace WebApplication16.Controllers
 
         }
 
-        public Tuple<string, string> getUserName(string id)
+        public Tuple<string, string> getUserName1(string id)
         {
             string name = "N/A";
             string email = "noemail@info.com";
@@ -171,6 +251,29 @@ namespace WebApplication16.Controllers
             con.Close();
 
             return Tuple.Create<string,string>(name,email);
+        }
+
+        public Tuple<string, string> getUserName2(string id)
+        {
+            string name = "N/A";
+            string email = "noemail@info.com";
+            SqlConnection con = new SqlConnection("data source=dewdfcto223.wdf.global.corp.sap;initial catalog=Compass_PRD;integrated security=True;MultipleActiveResultSets=true;App=EntityFramework&quot;");
+            con.Open();
+            SqlCommand com = new SqlCommand("Select PersonId, DisplayName, UserName FROM Compass_PRD.dbo.[User]", con);
+            com.CommandType = CommandType.Text;
+            SqlDataReader dr = com.ExecuteReader();
+            while (dr.Read())
+            {
+                if (id == dr["PersonId"].ToString())
+                {
+                    name = dr["DisplayName"].ToString();
+                    email = dr["UserName"].ToString();
+                }
+            }
+            dr.Close();
+            con.Close();
+
+            return Tuple.Create<string, string>(name, email);
         }
 
         public ActionResult About()
